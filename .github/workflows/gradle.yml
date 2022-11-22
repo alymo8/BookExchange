@@ -13,9 +13,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
@@ -27,10 +24,12 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'corretto'
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: FinalProject-Backend
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        working-directory: FinalProject-Backend
-        arguments: build
-        
+      run: ./gradlew build --stacktrace --scan
+      working-directory: FinalProject-Backend
