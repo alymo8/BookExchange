@@ -1,1 +1,0 @@
-web: java -jar FinalProject-Backend/build/libs/FinalProject-Backend-0.0.1-SNAPSHOT.jar
