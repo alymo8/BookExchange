@@ -1,5 +1,4 @@
 package finalProject.model;
-
 import lombok.AllArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
@@ -7,6 +6,7 @@ import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
+@Table(name = "account")
 public class User {
 
     UUID id;
