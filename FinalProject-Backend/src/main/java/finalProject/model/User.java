@@ -1,5 +1,8 @@
 package finalProject.model;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -80,6 +83,7 @@ public class User {
     }
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<Book> getBorrowedBooks() {
         return borrowedBooks;
     }
@@ -89,6 +93,7 @@ public class User {
     }
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<Book> getOfferedBooks() {
         return offeredBooks;
     }
