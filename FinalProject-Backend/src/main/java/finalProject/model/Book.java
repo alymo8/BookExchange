@@ -14,6 +14,7 @@ public class Book {
     String author;
     Date datePublished;
 
+    // empty constructor used to create a book
     public Book(){}
 
     @Id

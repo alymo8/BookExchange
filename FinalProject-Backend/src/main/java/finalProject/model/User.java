@@ -22,6 +22,7 @@ public class User {
     List<Book> borrowedBooks;
     List<Book> offeredBooks;
 
+    // empty constructor used to create a user
     public User() {}
 
     @Id
