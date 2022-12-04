@@ -54,9 +54,12 @@ public class UserService {
 
     public User offerBook(UUID userId, UUID bookId){
         User user = getUserById(userId);
-        List<Book> offeredBooks = user.getOfferedBooks();
+        if (user == null) throw new IllegalArgumentException("User does not exist");
+
         Book book = bookRepository.findById(bookId).orElse(null);
         if (book == null) throw new IllegalArgumentException("Book does not exist");
+
+        List<Book> offeredBooks = user.getOfferedBooks();
         offeredBooks.add(book);
         user.setOfferedBooks(offeredBooks);
 
