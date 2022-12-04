@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import ProfileCard from "./components/ProfileCard";
+import React from "react";
+import BookCard from "./components/BookCard";
 
 function App() {
+
+    const user = {
+        name: "Aly",
+        username: "aly1",
+        email: "aly@mail.com",
+        phoneNumber: "321233"
+    }
+
+    const book = {
+        name: "Messi the GOAT",
+        author: "Aly Mohamed",
+        isbn: "aaaadew34rwadsdc",
+        available: "Available"
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1>hi</h1>
+        <ProfileCard key = {null} user = {user}/>
+        <BookCard key = {null} book = {book}/>
     </div>
   );
 }
