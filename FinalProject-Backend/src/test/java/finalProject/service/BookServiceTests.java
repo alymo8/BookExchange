@@ -76,7 +76,7 @@ public class BookServiceTests {
         bookDTO.setIsbn(BOOK_ISBN);
         bookDTO.setAuthor(BOOK_AUTHOR);
         bookDTO.setName(BOOK_NAME);
-//        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
+        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
 
         Book book = null;
 
@@ -95,17 +95,84 @@ public class BookServiceTests {
 
 
     @Test
-    public void testCreateUserErrorBlankUsername() {
+    public void testCreateUserErrorBlankName() {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setIsbn(BOOK_ISBN);
         bookDTO.setAuthor(BOOK_AUTHOR);
-        bookDTO.setName(BOOK_NAME);
-//        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
+        bookDTO.setName("");
+        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
 
         try {
             bookService.createBook(bookDTO);
         }catch (IllegalArgumentException e) {
-            assertEquals("Username cannot be blank", e.getMessage());
+            assertEquals("Name cannot be blank", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateUserErrorBlankAuthor() {
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setIsbn(BOOK_ISBN);
+        bookDTO.setAuthor("");
+        bookDTO.setName(BOOK_NAME);
+        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
+
+        try {
+            bookService.createBook(bookDTO);
+        }catch (IllegalArgumentException e) {
+            assertEquals("Author cannot be blank", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateUserErrorBlankIsbn() {
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setIsbn("");
+        bookDTO.setAuthor(BOOK_AUTHOR);
+        bookDTO.setName(BOOK_NAME);
+        bookDTO.setDatePublished(BOOK_DATE_PUBLISHED);
+
+        try {
+            bookService.createBook(bookDTO);
+        }catch (IllegalArgumentException e) {
+            assertEquals("Isbn cannot be blank", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateUserErrorBlankDatePublished() {
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setIsbn(BOOK_ISBN);
+        bookDTO.setAuthor(BOOK_AUTHOR);
+        bookDTO.setName(BOOK_NAME);
+        bookDTO.setDatePublished(null);
+
+        try {
+            bookService.createBook(bookDTO);
+        }catch (IllegalArgumentException e) {
+            assertEquals("Date cannot be blank", e.getMessage());
+        }
+    }
+
+    @Test
+    public void deleteBookSuccess() {
+        boolean success = false;
+        try {
+            success = bookService.deleteBook(BOOK_ID);
+        }catch(IllegalArgumentException e) {
+            fail();
+        }
+        assertTrue(success);
+    }
+
+
+    @Test
+    public void deleteBookUserNotFound() {
+        UUID id = UUID.randomUUID();
+        try {
+            bookService.deleteBook(id);
+        }catch(IllegalArgumentException e) {
+            assertEquals("Book " + id + " not found.", e.getMessage());
         }
     }
 
