@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +19,6 @@ public class BookDTO {
     public String name;
     public String isbn;
     public String author;
-    public Date datePublished;
+    public LocalDate datePublished;
 
 }
