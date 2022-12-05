@@ -36,6 +36,8 @@ public class UserService {
         if(email == null || email.equals("")) throw new IllegalArgumentException("Email cannot be blank");
         if(phoneNumber == null || phoneNumber.equals("")) throw new IllegalArgumentException("Phone number cannot be blank");
 
+        if(userRepository.findUserByUsername(username).isPresent()) throw new IllegalArgumentException("Username is already taken");
+
         user.setUsername(username);
         user.setPassword(password);
         user.setAddress(address);
