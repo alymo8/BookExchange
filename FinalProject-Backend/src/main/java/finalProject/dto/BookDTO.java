@@ -20,5 +20,5 @@ public class BookDTO {
     public String isbn;
     public String author;
     public LocalDate datePublished;
-
+    public String bookAvailability;
 }

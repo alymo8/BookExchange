@@ -14,6 +14,7 @@ public class Book {
     String isbn;
     String author;
     LocalDate datePublished;
+    String bookAvailability;
 
     // empty constructor used to create a book
     public Book(){}
@@ -60,4 +61,7 @@ public class Book {
         this.datePublished = datePublished;
     }
 
+    public String getBookAvailability() {return this.bookAvailability;};
+
+    public void setBookAvailability(String bookAvailability) {this.bookAvailability = bookAvailability;}
 }

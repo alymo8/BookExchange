@@ -73,6 +73,9 @@ public class UserService {
         Book book = bookRepository.findById(bookId).orElse(null);
         if (book == null) throw new IllegalArgumentException("Book does not exist");
 
+        book.setBookAvailability("AVAILABLE");
+        bookRepository.save(book);
+
         List<Book> offeredBooks = user.getOfferedBooks();
         offeredBooks.add(book);
         user.setOfferedBooks(offeredBooks);
@@ -86,6 +89,9 @@ public class UserService {
 
         Book book = bookRepository.findById(bookId).orElse(null);
         if (book == null) throw new IllegalArgumentException("Book does not exist");
+
+        book.setBookAvailability("NOTAVAILABLE");
+        bookRepository.save(book);
 
         List<Book> borrowedBooks = user.getBorrowedBooks();
         borrowedBooks.add(book);
@@ -111,5 +117,10 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public List<Book> getUserOfferedBooks(UUID userId) { return getUserById(userId).getOfferedBooks(); }
+
+    public List<Book> getUserBorrowedBooks(UUID userId) { return getUserById(userId).getBorrowedBooks(); }
+
 
 }
