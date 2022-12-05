@@ -82,5 +82,18 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(value = "/{id}/borrowed")
+    public List<BookDTO> getUserBorrowedBooks(@PathVariable("id") UUID id) {
+        return userService.getUserBorrowedBooks(id).stream()
+                .map(Conversion::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/{id}/offered")
+    public List<BookDTO> getUserOfferedBooks(@PathVariable("id") UUID id) {
+        return userService.getUserOfferedBooks(id).stream()
+                .map(Conversion::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
 }

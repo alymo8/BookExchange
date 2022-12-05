@@ -26,6 +26,7 @@ public class BookService {
         String author = bookDTO.getAuthor();
         LocalDate datePublished = bookDTO.getDatePublished();
         String name = bookDTO.getName();
+        String availability = "AVAILABLE";
 
         if(name == null || name.equals("")) throw new IllegalArgumentException("Name cannot be blank");
         if(isbn == null || isbn.equals("")) throw new IllegalArgumentException("Isbn cannot be blank");
@@ -36,7 +37,7 @@ public class BookService {
         book.setName(name);
         book.setDatePublished(datePublished);
         book.setIsbn(isbn);
-
+        book.setBookAvailability(availability);
         return bookRepository.save(book);
     }
 
@@ -57,5 +58,6 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getAllAvailableBooks() { return bookRepository.findAllByBookAvailability("AVAILABLE");};
 
 }

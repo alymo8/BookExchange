@@ -50,4 +50,11 @@ public class BookController {
                 .map(Conversion::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    @GetMapping(value = "/available")
+    public List<BookDTO> viewAvailableBooks(){
+        return bookService.getAllAvailableBooks().stream()
+                .map(Conversion::convertToDTO)
+                .collect(Collectors.toList());
+    }
 }
