@@ -39,6 +39,8 @@
     ]
   },
   "devDependencies": {
-    "@mui/material": "^5.10.16"
+    "@mui/material": "^5.10.16",
+    "axios": "^1.2.0",
+    "react-router-dom": "^6.4.4"
   }
 }

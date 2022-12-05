@@ -1,25 +1,51 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardHeader, CardContent, Typography} from "@mui/material";
-const ProfileCard = (props) => {
+import axios from "axios";
+const ProfileCard = () => {
+    
+    // const user = localStorage.getItem("userId");
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        setLoading(true);
+        loadData();
+        setLoading(false);
+        // eslint-disable-next-line
+    }, []);
+
+    const loadData = () => {
+        setLoading(true);
+        axios
+            .get(`users/` + localStorage.getItem("userId"))
+            .then((res) => {
+                setUser(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                setUser({});
+            });
+        setLoading(false);
+    };
     return (
         <div style={{ marginTop:20, marginRight:80, marginLeft:80, color:'gray'}}>
-            <Card variant={"outlined"}>
+            {!loading && <Card variant={"outlined"}>
                 <CardHeader
                     title={
-                        <h1>{props.user.username}</h1>
+                        <h1>{user.username}</h1>
                     }
                     subheader={
-                        props.user.name
+                        user.name
                     }
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        {"Email: " + props.user.email} <br/>
-                        {"Phone Number: " + props.user.phoneNumber} <br/>
-                        {"Address: " + props.user.address} <br/>
+                        {"Email: " + user.email} <br/>
+                        {"Phone Number: " + user.phoneNumber} <br/>
+                        {"Address: " + user.address} <br/>
                     </Typography>
                 </CardContent>
-            </Card>
+            </Card>}
         </div>
     )
 }

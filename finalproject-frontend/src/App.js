@@ -1,29 +1,27 @@
 import './App.css';
-import ProfileCard from "./components/ProfileCard";
 import React from "react";
-import BookCard from "./components/BookCard";
+import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
+import OfferBook from "./pages/OfferBook";
+
 
 function App() {
 
-    const user = {
-        name: "Aly",
-        username: "aly1",
-        email: "aly@mail.com",
-        phoneNumber: "321233"
-    }
-
-    const book = {
-        name: "Messi the GOAT",
-        author: "Aly Mohamed",
-        isbn: "aaaadew34rwadsdc",
-        available: "Available"
-    }
   return (
-    <div className="App">
-        <h1>hi</h1>
-        <ProfileCard key = {null} user = {user}/>
-        <BookCard key = {null} book = {book}/>
-    </div>
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="signIn" element={<SignIn />} />
+            <Route path="signUp" element={<SignUp />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="offerBook" element={<OfferBook />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
   );
 }
 
