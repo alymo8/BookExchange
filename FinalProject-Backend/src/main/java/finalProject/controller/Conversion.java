@@ -42,6 +42,7 @@ public class Conversion {
         bookDTO.setDatePublished(book.getDatePublished());
         bookDTO.setName(book.getName());
         bookDTO.setIsbn(book.getIsbn());
+        bookDTO.setBookAvailability(book.getBookAvailability());
         return bookDTO;
     }
 
