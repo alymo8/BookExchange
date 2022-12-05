@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -21,7 +22,8 @@ public class TestBookPersistence {
 
     String author = "Robert";
     String isbn = "1234566777";
-    String name = "Messi is the GOAT";
+    String name = "Cristiano is the GOAT";
+    LocalDate datePublished = LocalDate.of(2020, 1, 8);
 
     @Autowired
     BookRepository bookRepository;
@@ -42,7 +44,7 @@ public class TestBookPersistence {
 
         book.setAuthor(author);
         book.setIsbn(isbn);
-        book.setDatePublished(new Date());
+        book.setDatePublished(datePublished);
         book.setName(name);
         bookRepository.save(book);
 
