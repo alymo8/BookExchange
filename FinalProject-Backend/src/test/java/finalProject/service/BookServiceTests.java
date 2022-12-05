@@ -162,6 +162,7 @@ public class BookServiceTests {
         }catch(IllegalArgumentException e) {
             fail();
         }
+        
         assertTrue(success);
     }
 
