@@ -52,6 +52,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User login(UserDTO userDTO) {
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
+        if(!userRepository.existsUserByUsername(username)) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+
+        if(!userRepository.existsUserByUsernameAndPassword(username, password)) {
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        return userRepository.findUserByUsernameAndPassword(username, password).orElse(null);
+    }
+
     public User offerBook(UUID userId, UUID bookId){
         User user = getUserById(userId);
         if (user == null) throw new IllegalArgumentException("User does not exist");
