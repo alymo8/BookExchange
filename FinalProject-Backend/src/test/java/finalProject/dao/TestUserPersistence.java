@@ -8,6 +8,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,11 +27,15 @@ public class TestUserPersistence {
 
     String author = "Robert";
     String isbn = "1234566777";
-    String bookName = "Messi is the GOAT";
+    String bookName = "Cristiano is the GOAT";
+    LocalDate datePublished = LocalDate.of(2020, 2, 8);
+
 
     String author2 = "Robert - 2";
     String isbn2 = "1234566777 - 2";
-    String bookName2 = "Messi is the GOAT - 2";
+    String bookName2 = "Cristiano is the GOAT - 2";
+    LocalDate datePublished2 = LocalDate.of(2020, 3, 8);
+
 
     @Autowired
     UserRepository userRepository;
@@ -60,7 +65,7 @@ public class TestUserPersistence {
         Book book = new Book();
         book.setAuthor(author);
         book.setIsbn(isbn);
-        book.setDatePublished(new Date());
+        book.setDatePublished(datePublished);
         book.setName(bookName);
 
         offeredBooks.add(book);
@@ -71,7 +76,7 @@ public class TestUserPersistence {
         Book book2 = new Book();
         book2.setAuthor(author2);
         book2.setIsbn(isbn2);
-        book2.setDatePublished(new Date());
+        book2.setDatePublished(datePublished2);
         book2.setName(bookName2);
 
         borrowedBooks.add(book2);

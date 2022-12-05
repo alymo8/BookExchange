@@ -1,5 +1,6 @@
 package finalProject.model;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ public class Book {
     String name;
     String isbn;
     String author;
-    Date datePublished;
+    LocalDate datePublished;
 
     // empty constructor used to create a book
     public Book(){}
@@ -51,11 +52,11 @@ public class Book {
         this.author = author;
     }
 
-    public Date getDatePublished() {
+    public LocalDate getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(LocalDate datePublished) {
         this.datePublished = datePublished;
     }
 
