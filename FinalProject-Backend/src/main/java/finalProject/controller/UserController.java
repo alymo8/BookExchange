@@ -40,7 +40,7 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}/borrow")
