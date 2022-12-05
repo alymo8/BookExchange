@@ -32,6 +32,17 @@ public class UserController {
         return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        User user;
+        try {
+            user = userService.login(userDTO);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.OK);
+    }
+
     @PutMapping(value = "/{id}/borrow")
     public ResponseEntity<?> borrowBook(@PathVariable("id") UUID id, @RequestBody UUID bookId) {
         User user;
