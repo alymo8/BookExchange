@@ -14,25 +14,56 @@ const BookCard = (props) => {
     const bookId = props.book.id;
 
     const handleReturn = React.useCallback(() => {
-        console.log("Return button pressed")
-    }, [])
+        console.log("Return button pressed");
+        console.log("bookId", bookId)
+        axios.put("users/" + localStorage.getItem("userId") + "/return", {
+            "id": bookId
+        }).then(res => {
+            setSuccess(true);
+            setSuccessMessage("Book was returned successfully");
+        }).catch(function (error) {
+            setError(true);
+            setErrorMessage("Book could not be returned.");
+        });
+
+    }, [bookId])
 
     const handleRemove = React.useCallback(() => {
         console.log("Remove button pressed");
+        axios.put("users/" + localStorage.getItem("userId") + "/unOffer", {
+            id: bookId
+        }, ).then(res => {
+            setSuccess(true);
+            setSuccessMessage("Book was deleted successfully");
+        }).catch(function (error) {
+            setError(true);
+            setErrorMessage("Book could not be deleted.");
+        });
         axios.delete("books/" + bookId, {}).then(res => {
             setSuccess(true);
             setSuccessMessage("Book was deleted successfully");
-            localStorage.removeItem("userId");
-            window.location.href = "/";
         }).catch(function (error) {
             setError(true);
             setErrorMessage("Book could not be deleted.");
         });
         }, [bookId])
 
+
     const handleBorrow = React.useCallback(() => {
-        console.log("Borrow button pressed")
-    }, [])
+        console.log("Borrow button pressed");
+        console.log("bookId", bookId)
+        axios.put("users/" + localStorage.getItem("userId") + "/borrow", {
+            "id": bookId
+        }).then(res => {
+            setSuccess(true);
+            setSuccessMessage("Book was borrowed successfully");
+        }).catch(function (error) {
+            setError(true);
+            setErrorMessage("Book could not be borrowed.");
+        });
+    }, [bookId])
+
+
 
     return (
         <div style={{ marginTop:20, marginRight:80, marginLeft:80, color:'gray'}}>

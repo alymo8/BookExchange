@@ -6,8 +6,10 @@ import Button from "@mui/material/Button";
 
 function Home() {
 
-    const[availableBooks, setAvailableBooks] = useState([]);
+    const [availableBooks, setAvailableBooks] = useState([]);
+    const [offeredBooks, setOfferedBooks] = useState([]);
     const [loading, setLoading] = useState(false);
+
 
     const loggedIn = (() => {
         console.log("user", localStorage.getItem("userId"))
@@ -17,8 +19,6 @@ function Home() {
             return false
         }
     })();
-
-    // const [available, setAvailable] = useState(false);
 
     const handleSignInButton = React.useCallback(() => {
         console.log("Sign in button pressed")
@@ -60,6 +60,17 @@ function Home() {
                 console.log(err);
                 setAvailableBooks([]);
             });
+
+        axios
+            .get(`users/` + localStorage.getItem("userId"))
+            .then((res) => {
+                setOfferedBooks(res.data.offeredBooksIds);
+                console.log(offeredBooks)
+            })
+            .catch((err) => {
+                console.log(err);
+                setOfferedBooks([]);
+            });
         setLoading(false);
     };
 
@@ -82,9 +93,15 @@ function Home() {
             </div>
             <div style={{ marginBottom: 20 }}>
                 {!loading && availableBooks != null && availableBooks.map((book) => {
-                    return (
-                        <BookCard key={book.id} book={book} available={true}/>
-                    );
+                    if(offeredBooks.includes(book.id)) {
+                        return null;
+                    }
+                    else {
+                        return (
+                            <BookCard key={book.id} book={book} available={true}/>
+                        );
+                    }
+
                 })}
             </div>
         </div>
