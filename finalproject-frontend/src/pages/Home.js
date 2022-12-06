@@ -18,6 +18,8 @@ function Home() {
         }
     })();
 
+    // const [available, setAvailable] = useState(false);
+
     const handleSignInButton = React.useCallback(() => {
         console.log("Sign in button pressed")
         window.location.href = "signIn";
@@ -81,7 +83,7 @@ function Home() {
             <div style={{ marginBottom: 20 }}>
                 {!loading && availableBooks != null && availableBooks.map((book) => {
                     return (
-                        <BookCard key={book.id} book={book} />
+                        <BookCard key={book.id} book={book} available={true}/>
                     );
                 })}
             </div>

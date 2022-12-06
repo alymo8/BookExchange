@@ -11,6 +11,10 @@ const BookCard = (props) => {
         console.log("Remove button pressed")
     }, [])
 
+    const handleBorrow = React.useCallback(() => {
+        console.log("Borrow button pressed")
+    }, [])
+
     return (
         <div style={{ marginTop:20, marginRight:80, marginLeft:80, color:'gray'}}>
             <Card variant={"outlined"}>
@@ -31,7 +35,7 @@ const BookCard = (props) => {
                 <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row"}}>
                     {props.offered === true && <Button onClick={handleRemove}>Remove</Button>}
                     {props.offered === false && <Button onClick={handleReturn}>Return</Button>}
-
+                    {props.available === true && <Button onClick={handleBorrow}>Borrow</Button>}
                 </div>
             </Card>
         </div>
