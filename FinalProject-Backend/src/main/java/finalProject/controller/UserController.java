@@ -44,10 +44,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}/borrow")
-    public ResponseEntity<?> borrowBook(@PathVariable("id") UUID id, @RequestBody UUID bookId) {
+    public ResponseEntity<?> borrowBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
         User user;
         try {
-            user = userService.borrowBook(id, bookId);
+            user = userService.borrowBook(id, bookDTO.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -55,10 +55,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}/offer")
-    public ResponseEntity<?> offerBook(@PathVariable("id") UUID id, @RequestBody UUID bookId) {
+    public ResponseEntity<?> offerBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
         User user;
         try {
-            user = userService.offerBook(id, bookId);
+            user = userService.offerBook(id, bookDTO.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -66,10 +66,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}/return")
-    public ResponseEntity<?> returnBook(@PathVariable("id") UUID id, @RequestBody UUID bookId) {
+    public ResponseEntity<?> returnBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
         User user;
         try {
-            user = userService.returnBook(id, bookId);
+            user = userService.returnBook(id, bookDTO.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
