@@ -76,6 +76,17 @@ public class UserController {
         return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}/unOffer")
+    public ResponseEntity<?> unOfferBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
+        User user;
+        try {
+            user = userService.unOfferBook(id, bookDTO.getId());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
+    }
+
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@PathVariable("id") UUID id) {
         return Conversion.convertToDTO(userService.getUserById(id));
