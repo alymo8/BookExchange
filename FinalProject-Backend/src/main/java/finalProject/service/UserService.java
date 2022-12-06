@@ -113,6 +113,8 @@ public class UserService {
         for(Book book: borrowedBooks) {
             if(book.getId().compareTo(bookId) == 0) {
                 borrowedBooks.remove(book);
+                book.setBookAvailability("AVAILABLE");
+                bookRepository.save(book);
                 removed = true;
                 break;
             }
@@ -121,6 +123,8 @@ public class UserService {
             throw new IllegalArgumentException("Book was not borrowed by this user");
         }
         user.setBorrowedBooks(borrowedBooks);
+
+
 
         return userRepository.save(user);
     }
