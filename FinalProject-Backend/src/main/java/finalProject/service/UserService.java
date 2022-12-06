@@ -123,7 +123,27 @@ public class UserService {
         user.setBorrowedBooks(borrowedBooks);
 
         return userRepository.save(user);
+    }
 
+    public User unOfferBook(UUID userId, UUID bookId){
+        User user = getUserById(userId);
+        if (user == null) throw new IllegalArgumentException("User does not exist");
+
+        boolean removed = false;
+
+        List<Book> offeredBooks = user.getBorrowedBooks();
+        for(Book book: offeredBooks) {
+            if(book.getId().compareTo(bookId) == 0) {
+                offeredBooks.remove(book);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed) {
+            throw new IllegalArgumentException("Book was not offered by this user");
+        }
+        user.setOfferedBooks(offeredBooks);
+        return userRepository.save(user);
     }
 
     public User getUserById(UUID id) {
