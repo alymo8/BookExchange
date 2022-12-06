@@ -1,15 +1,34 @@
-import React from "react";
-import {Card, CardHeader, CardContent, Typography} from "@mui/material";
+import React, {useState} from "react";
+import {Card, CardHeader, CardContent, Typography, Alert} from "@mui/material";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import axios from "axios";
+
+
 const BookCard = (props) => {
+
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const bookId = props.book.id;
 
     const handleReturn = React.useCallback(() => {
         console.log("Return button pressed")
     }, [])
 
     const handleRemove = React.useCallback(() => {
-        console.log("Remove button pressed")
-    }, [])
+        console.log("Remove button pressed");
+        axios.delete("books/" + bookId, {}).then(res => {
+            setSuccess(true);
+            setSuccessMessage("Book was deleted successfully");
+            localStorage.removeItem("userId");
+            window.location.href = "/";
+        }).catch(function (error) {
+            setError(true);
+            setErrorMessage("Book could not be deleted.");
+        });
+        }, [bookId])
 
     const handleBorrow = React.useCallback(() => {
         console.log("Borrow button pressed")
@@ -37,6 +56,10 @@ const BookCard = (props) => {
                     {props.offered === false && <Button onClick={handleReturn}>Return</Button>}
                     {props.available === true && <Button onClick={handleBorrow}>Borrow</Button>}
                 </div>
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    {error && <Alert severity="error">{errorMessage}</Alert>}
+                    {success && <Alert severity="success">{successMessage}</Alert>}
+                </Stack>
             </Card>
         </div>
     )
