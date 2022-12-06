@@ -131,7 +131,7 @@ public class UserService {
 
         boolean removed = false;
 
-        List<Book> offeredBooks = user.getBorrowedBooks();
+        List<Book> offeredBooks = user.getOfferedBooks();
         for(Book book: offeredBooks) {
             if(book.getId().compareTo(bookId) == 0) {
                 offeredBooks.remove(book);
