@@ -50,7 +50,7 @@ function Home() {
     const loadData = () => {
         setLoading(true);
         axios
-            .get(`books`)
+            .get(`books/available`)
             .then((res) => {
                 setAvailableBooks(res.data);
             })
