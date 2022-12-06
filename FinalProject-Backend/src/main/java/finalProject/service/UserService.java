@@ -114,6 +114,7 @@ public class UserService {
             if(book.getId().compareTo(bookId) == 0) {
                 borrowedBooks.remove(book);
                 removed = true;
+                break;
             }
         }
         if(!removed) {
