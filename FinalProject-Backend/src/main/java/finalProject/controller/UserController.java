@@ -2,7 +2,9 @@ package finalProject.controller;
 
 import finalProject.dto.BookDTO;
 import finalProject.dto.UserDTO;
+import finalProject.model.Book;
 import finalProject.model.User;
+import finalProject.service.BookService;
 import finalProject.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private UserService userService;
+    private BookService bookService;
+
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
@@ -81,6 +85,19 @@ public class UserController {
         User user;
         try {
             user = userService.unOfferBook(id, bookDTO.getId());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}/createAndOffer")
+    public ResponseEntity<?> createAndOfferBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
+        User user;
+        Book book;
+        try {
+            book = bookService.createBook(bookDTO);
+            user = userService.offerBook(id, book.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
