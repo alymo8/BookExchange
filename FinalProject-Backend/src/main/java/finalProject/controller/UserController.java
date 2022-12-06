@@ -65,6 +65,17 @@ public class UserController {
         return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}/return")
+    public ResponseEntity<?> returnBook(@PathVariable("id") UUID id, @RequestBody UUID bookId) {
+        User user;
+        try {
+            user = userService.returnBook(id, bookId);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
+    }
+
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@PathVariable("id") UUID id) {
         return Conversion.convertToDTO(userService.getUserById(id));

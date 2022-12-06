@@ -40,8 +40,8 @@ public class BookController {
     }
 
     @DeleteMapping(value = {"/{id}"})
-    public boolean deleteBook(@PathVariable("id") UUID id) {
-        return bookService.deleteBook(id);
+    public boolean deleteBook(@PathVariable("id") UUID id, UserDTO userDTO) {
+        return bookService.deleteBook(id, userDTO.getId());
     }
 
     @GetMapping
