@@ -36,10 +36,10 @@ function Home() {
         window.location.href = "profile";
     }, [])
 
-    const handleOfferBook = React.useCallback(() => {
-        console.log("Offer book button pressed")
-        window.location.href = "offerBook";
-    }, [])
+    // const handleOfferBook = React.useCallback(() => {
+    //     console.log("Offer book button pressed")
+    //     window.location.href = "offerBook";
+    // }, [])
 
     useEffect(() => {
         console.log(loggedIn);
@@ -88,7 +88,7 @@ function Home() {
 
                 </div>
                 <h1>Welcome to BookExchange!</h1>
-                {loggedIn && <Button onClick={handleOfferBook}>Offer book</Button>}
+                {/*{loggedIn && <Button onClick={handleOfferBook}>Offer book</Button>}*/}
                 <h2>Available books</h2>
             </div>
             <div style={{ marginBottom: 20 }}>
@@ -98,7 +98,7 @@ function Home() {
                     }
                     else {
                         return (
-                            <BookCard key={book.id} book={book} available={true}/>
+                            <BookCard key={book.id} book={book} available={true} loggedIn={loggedIn}/>
                         );
                     }
 

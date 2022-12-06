@@ -21,8 +21,11 @@ const OfferBook = () => {
     const [bookId, setBookId] = React.useState("");
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
+    const [successMessage, setSuccessMessage] = React.useState("");
+
     const [disable, setDisable] = React.useState(true);
-  
+    const [bookCreated, setBookCreated] = React.useState(false);
+
     React.useEffect(() => {
       if (name && author && isbn && datePublished){
         setDisable(false);
@@ -51,54 +54,54 @@ const OfferBook = () => {
       setError(false);
       setDatePublished(event.target.value);
     };
-  
-    const handleSignUp = React.useCallback(() => {
-      if(!isNaN(name)){
-          setError(true);
-          setErrorMessage("Book name Must Be A String");
-      }
-      else if(!isNaN(author)){
-          setError(true);
-          setErrorMessage("Author Must Be A String");
-      }
-      else if(!isNaN(isbn)){
-        setError(true);
-        setErrorMessage("ISBN Must Be A String");
-      }
-      else if(!isNaN(datePublished)){
-        setError(true);
-        setErrorMessage("Date Published Must Be A Date with format YYYY-MM-DD");
-      }
-      else{
-          axios.post("books", {
-              name: name,
-              author:author,
-              isbn:isbn,
-              datePublished:datePublished
+
+    const handleCreateBook = React.useCallback(() => {
+
+        setSuccess(false);
+        setError(false);
+        setBookCreated(false);
+        axios.post("users/" + localStorage.getItem("userId") + "/createAndOffer", {
+            name: name,
+            isbn: isbn,
+            author: author,
+            datePublished: datePublished,
+        })
+            .then(res => {
+                setBookId(res.data.id)
+                setSuccess(true)
+                setSuccessMessage("Created book successfully")
+                setBookCreated(true)
+                console.log(bookId)
             })
-            .then(function (res) {
-              console.log(res.data.id)
-              console.log("test")
-              setBookId(res.data.id)
-              console.log(localStorage.getItem("userId"))
-              setSuccess(true);
-            })
-            .catch(function (error) {
-              setError(true);
-              setErrorMessage("One input was wrongly entered, please check your choices again");
-            });
-          axios.put("users/" + localStorage.getItem("userId") + "/offer", {
-              id: bookId
-          })
-            .then(function (response) {
-                setSuccess(true);
-              })
-              .catch(function (error) {
+            .catch(function (e) {
                 setError(true);
-                setErrorMessage("cannot update books offered");
-          });
-      }
-  }, [name, author, isbn,datePublished]);
+                setErrorMessage("Wrong username or password");
+            });
+
+    }, [name, isbn, author, datePublished, bookId]);
+
+    // const handleOfferBook = React.useCallback(() => {
+    //
+    //     setSuccess(false);
+    //     setError(false);
+    //     if(bookCreated) {
+    //         axios.put("users/" + localStorage.getItem("userId") + "/offer", {
+    //             id: bookId
+    //         })
+    //             .then(res => {
+    //                 // setBookId(res.data.id)
+    //                 setSuccess(true)
+    //                 setSuccessMessage("Created and offered book succesfully")
+    //                 console.log(bookId)
+    //             })
+    //             .catch(function (e) {
+    //                 setError(true);
+    //                 setErrorMessage("Wrong username or password");
+    //             });
+    //     }
+    //
+    // }, [ bookId, bookCreated]);
+
     return (
         <>
         <Button onClick={handleHomeButton}>Home</Button>
@@ -113,13 +116,17 @@ const OfferBook = () => {
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-            <Button variant='contained' onClick={handleSignUp} color="primary" disabled={disable}>
-              Submit
-            </Button>
+              {!bookCreated && <Button variant='contained' onClick={handleCreateBook} color="primary" disabled={disable}>
+              Create book
+            </Button>}
+              {/*{bookCreated && <Button variant='contained' onClick={handleOfferBook} color="primary" disabled={disable}>*/}
+              {/*    Offer book*/}
+              {/*</Button>}*/}
+
           </div>
           <Stack sx={{ width: '100%' }} spacing={2}>
             {error && <Alert severity="error">{errorMessage}</Alert>}
-            {success && <Alert severity="success">Book has been successfully offered!</Alert>}
+            {success && <Alert severity="success">{successMessage}</Alert>}
           </Stack>
         </>
         )

@@ -56,6 +56,11 @@ const Profile = () => {
         console.log(value)
     };
 
+    const handleOfferBook = React.useCallback(() => {
+        console.log("Offer book button pressed")
+        window.location.href = "offerBook";
+    }, [])
+
     return (
         <>
             <Button onClick={handleHomeButton}>Home</Button>
@@ -64,7 +69,12 @@ const Profile = () => {
             </div>
             <ProfileCard/>
             <div style={{display: 'flex', justifyContent:'center', marginTop:20}}>
-            <h1>Your books</h1>
+                <h1>Your books</h1>
+
+            </div>
+
+            <div style={{display: 'flex', justifyContent:'center'}}>
+                <Button onClick={handleOfferBook}>Add book</Button>
             </div>
             <div style={{justifyContent:'center', marginTop:20}}>
                 <TabContext value={value}>
@@ -87,7 +97,8 @@ const Profile = () => {
                         return (
                             <BookCard key={book.id} book={book} offered={true}/>
                         );
-                    })}</TabPanel>
+                    })}
+                    </TabPanel>
                     </div>
                 </TabContext>
             </div>

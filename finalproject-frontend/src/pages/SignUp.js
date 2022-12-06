@@ -104,6 +104,9 @@ const handleBackButton = React.useCallback(() => {
           })
           .then(function (response) {
             setSuccess(true);
+            localStorage.setItem("userId", response.data.id);
+            window.location.href = "/";
+
           })
           .catch(function (error) {
             setError(true);

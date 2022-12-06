@@ -85,7 +85,7 @@ const BookCard = (props) => {
                 <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row"}}>
                     {props.offered === true && <Button onClick={handleRemove}>Remove</Button>}
                     {props.offered === false && <Button onClick={handleReturn}>Return</Button>}
-                    {props.available === true && <Button onClick={handleBorrow}>Borrow</Button>}
+                    {props.available === true && props.loggedIn === true && <Button onClick={handleBorrow}>Borrow</Button>}
                 </div>
                 <Stack sx={{ width: '100%' }} spacing={2}>
                     {error && <Alert severity="error">{errorMessage}</Alert>}
