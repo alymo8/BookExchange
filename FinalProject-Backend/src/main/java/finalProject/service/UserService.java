@@ -103,6 +103,28 @@ public class UserService {
 
     }
 
+    public User returnBook(UUID userId, UUID bookId){
+        User user = getUserById(userId);
+        if (user == null) throw new IllegalArgumentException("User does not exist");
+
+        boolean removed = false;
+
+        List<Book> borrowedBooks = user.getBorrowedBooks();
+        for(Book book: borrowedBooks) {
+            if(book.getId().compareTo(bookId) == 0) {
+                borrowedBooks.remove(book);
+                removed = true;
+            }
+        }
+        if(!removed) {
+            throw new IllegalArgumentException("Book was not borrowed by this user");
+        }
+        user.setBorrowedBooks(borrowedBooks);
+
+        return userRepository.save(user);
+
+    }
+
     public User getUserById(UUID id) {
         return userRepository.findById(id).orElse(null);
     }

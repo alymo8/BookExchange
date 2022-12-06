@@ -19,6 +19,7 @@ import java.util.UUID;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final UserRepository userRepository;
 
     public Book createBook(BookDTO bookDTO) {
         Book book = new Book();
@@ -45,8 +46,26 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
-    public boolean deleteBook(UUID id) {
+    public boolean deleteBook(UUID id, UUID userId) {
         try {
+
+            boolean removed = false;
+
+            User user = userRepository.findById(userId).orElse(null);
+            if(user == null){
+                throw new IllegalArgumentException("User does not exist");
+            }
+            List<Book> offeredBooks = user.getOfferedBooks();
+            for(Book book: offeredBooks) {
+                if(book.getId().compareTo(id) == 0) {
+                    offeredBooks.remove(book);
+                    removed = true;
+                }
+            }
+            if(!removed) {
+                throw new IllegalArgumentException("Book was not borrowed by this user");
+            }
+
             bookRepository.deleteById(id);
             return true;
         } catch (IllegalArgumentException e) {
