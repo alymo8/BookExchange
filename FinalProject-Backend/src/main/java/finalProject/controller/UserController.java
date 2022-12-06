@@ -91,7 +91,7 @@ public class UserController {
         return new ResponseEntity<>(Conversion.convertToDTO(user), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}/createAndOffer")
+    @PostMapping(value = "/{id}/createAndOffer")
     public ResponseEntity<?> createAndOfferBook(@PathVariable("id") UUID id, @RequestBody BookDTO bookDTO) {
         User user;
         Book book;
