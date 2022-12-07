@@ -2,6 +2,7 @@ import React from "react";
 import {Stack,Alert,Button,TextField} from "@mui/material";
 
 import axios from "axios";
+import Bar from "../components/AppBar";
 
 
 
@@ -104,30 +105,31 @@ const OfferBook = () => {
 
     return (
         <>
-        <Button onClick={handleHomeButton}>Home</Button>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 120}}>
-            <h1>Offer Book</h1>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-            <TextField label="Book name" variant="standard" required="true" onChange={handleNameChange}/>
-            <TextField label="Author" variant="standard" required="true" onChange={handleAuthorChange}/>
-            <TextField label="Isbn" variant="standard"  required="true" onChange={handleISBNChange}/>
-            <TextField label="Date Published" variant="standard" required="true" onChange={handleDatePublishedChange}/>
-          </div>
-          
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-              {!bookCreated && <Button variant='contained' onClick={handleCreateBook} color="primary" disabled={disable}>
-              Create book
-            </Button>}
-              {/*{bookCreated && <Button variant='contained' onClick={handleOfferBook} color="primary" disabled={disable}>*/}
-              {/*    Offer book*/}
-              {/*</Button>}*/}
+            <Bar/>
+            <Button onClick={handleHomeButton}>Home</Button>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 120}}>
+                <h1>Offer Book</h1>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                <TextField label="Book name" variant="standard" required="true" onChange={handleNameChange}/>
+                <TextField label="Author" variant="standard" required="true" onChange={handleAuthorChange}/>
+                <TextField label="Isbn" variant="standard"  required="true" onChange={handleISBNChange}/>
+                <TextField label="Date Published" variant="standard" required="true" onChange={handleDatePublishedChange}/>
+              </div>
 
-          </div>
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            {error && <Alert severity="error">{errorMessage}</Alert>}
-            {success && <Alert severity="success">{successMessage}</Alert>}
-          </Stack>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                  {!bookCreated && <Button variant='contained' onClick={handleCreateBook} color="primary" disabled={disable}>
+                  Create book
+                </Button>}
+                  {/*{bookCreated && <Button variant='contained' onClick={handleOfferBook} color="primary" disabled={disable}>*/}
+                  {/*    Offer book*/}
+                  {/*</Button>}*/}
+
+              </div>
+              <Stack sx={{ width: '100%' }} spacing={2}>
+                {error && <Alert severity="error">{errorMessage}</Alert>}
+                {success && <Alert severity="success">{successMessage}</Alert>}
+              </Stack>
         </>
         )
 }

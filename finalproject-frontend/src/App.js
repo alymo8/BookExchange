@@ -6,7 +6,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import OfferBook from "./pages/OfferBook";
-
+import YourBooks from "./pages/YourBooks";
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
             <Route path="signUp" element={<SignUp />} />
             <Route path="profile" element={<Profile />} />
             <Route path="offerBook" element={<OfferBook />} />
+            <Route path="yourBooks" element={<YourBooks />} />
           </Routes>
         </div>
       </BrowserRouter>

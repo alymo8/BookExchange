@@ -1,147 +1,181 @@
-import { Button, Alert, TextField } from "@mui/material";
-import axios from "axios";
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
+import Bar from "../components/AppBar";
+
+function Copyright(props) {
+  return (
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+  );
+}
+
+const theme = createTheme();
+
+export default function SignUp() {
 
 
-const Signup = () => {
-
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [address, setAddress] = React.useState("");
-  const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const [success, setSuccess] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState("");
+
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [disable, setDisable] = React.useState(true);
 
-  const handleHomeButton = React.useCallback(() => {
-    console.log("Home button pressed")
-    window.location.href = "/";
-}, [])
-
-const handleBackButton = React.useCallback(() => {
-    console.log("Back button pressed")
-    window.location.href = "/signIn";
-}, [])
-
-  React.useEffect(() => {
-    if (name && email && address && phoneNumber && username && password){
-      setDisable(false);
-    }
-    else{
-      setDisable(true);
-    }
-  }, [name, email, phoneNumber, address, username, password]);
-
-  const handleNameChange = (event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSuccess(false);
     setError(false);
-    setName(event.target.value);
-  };
+    const data = new FormData(event.currentTarget);
+    console.log(data.get('name'), data.get('email'), data.get('address'), data.get('phoneNumber'), data.get('username'), data.get('password'))
 
-  const handleEmailChange = (event) => {
-    setError(false);
-    setEmail(event.target.value);
-  };
+    axios.post("users", {
+      username: data.get('username'),
+      password: data.get('password'),
+      name: data.get('name'),
+      email: data.get('email'),
+      address: data.get('address'),
+      phoneNumber: data.get('phoneNumber'),
+      borrowedBooksIds: [],
+      offeredBooksIds: []
+    })
+    .then(function (response) {
+      setSuccess(true);
+      setSuccessMessage("User account has been successfully created!")
+      localStorage.setItem("userId", response.data.id);
+      window.location.href = "/";
 
-  const handleAddressChange = (event) => {
-    setError(false);
-    setAddress(event.target.value);
-  };
-
-  const handlePhoneNumberChange = (event) => {
-    setError(false);
-    setPhoneNumber(event.target.value);
-  };
-
-  const handleUsernameChange = (event) => {
-    setError(false);
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setError(false);
-    setPassword(event.target.value);
-  };
-
-  const handleSignUp = React.useCallback(() => {
-    if(!isNaN(name)){
-        setError(true);
-        setErrorMessage("Name Must Be A String");
-    }
-    else if(!isNaN(email)){
+    })
+    .catch(function (error) {
       setError(true);
-      setErrorMessage("Email Must Be A String");
-    }
-    else if(!isNaN(address)){
-      setError(true);
-      setErrorMessage("Address Description Must Be A String");
-    }
-    else if(isNaN(phoneNumber)){
-      setError(true);
-      setErrorMessage("Phone Number Description Must Be A Number");
-    }
-    else if(!isNaN(username)){
-      setError(true);
-      setErrorMessage("Username Must Be A String");
-    }    
-    else if(!isNaN(password)){
-      setError(true);
-      setErrorMessage("Password Must Be A String");
-    }
-    else{
-        axios.post("users", {
-            username: username,
-            password: password,
-            name: name,
-            email: email,
-            address: address,
-            phoneNumber:phoneNumber,
-            borrowedBooksIds: [],
-            offeredBooksIds: []
-          })
-          .then(function (response) {
-            setSuccess(true);
-            localStorage.setItem("userId", response.data.id);
-            window.location.href = "/";
-
-          })
-          .catch(function (error) {
-            setError(true);
-            setErrorMessage("One input was wrongly entered, please check your choices again");
-          });
-    }
-}, [name, email, phoneNumber, address, username, password]);
+      setErrorMessage("Wrong inputs, please check your choices");
+    });
+  };
 
   return (
-  <>
-    <Button onClick={handleBackButton}>Back</Button><Button onClick={handleHomeButton}>Home</Button>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 120}}>
-      <h1>Sign up</h1>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-      <TextField label="Name" variant="standard" required="true" onChange={handleNameChange}/>
-      <TextField label="Email" variant="standard"  required="true" onChange={handleEmailChange}/>
-      <TextField label="Address" variant="standard" required="true" onChange={handleAddressChange}/>
-
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-      <TextField label="Phone number" variant="standard" required="true" onChange={handlePhoneNumberChange}/>
-      <TextField label="username" variant="standard" required="true" onChange={handleUsernameChange}/>
-      <TextField type="password" label="password" variant="standard" required="true" onChange={handlePasswordChange}/>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-      <Button variant='contained' onClick={handleSignUp} color="primary" disabled={disable}>
-        Sign Up
-      </Button>
-    </div>
-    <Stack sx={{ width: '100%' }} spacing={2}>
-      {error && <Alert severity="error">{errorMessage}</Alert>}
-      {success && <Alert severity="success">User account has been successfully created!</Alert>}
-    </Stack>
-  </>
-  )
-};
-export default Signup;
+      <ThemeProvider theme={theme}>
+        <Bar/>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+              sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                      autoComplete="given-name"
+                      name="name"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Name"
+                      autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                      required
+                      fullWidth
+                      id="phoneNumber"
+                      label="Phone Number"
+                      name="phoneNumber"
+                      autoComplete="phone-number"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                      required
+                      fullWidth
+                      id="address"
+                      label="Address"
+                      name="address"
+                      autoComplete="address"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                      required
+                      fullWidth
+                      id="username"
+                      label="Username"
+                      name="username"
+                      autoComplete="username"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="new-password"
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="signIn" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            {error && <Alert severity="error">{errorMessage}</Alert>}
+            {success && <Alert severity="success">{successMessage}</Alert>}
+          </Stack>
+          <Copyright sx={{ mt: 5 }} />
+        </Container>
+      </ThemeProvider>
+  );
+}
