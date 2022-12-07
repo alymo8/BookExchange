@@ -3,6 +3,7 @@ import {Card, CardHeader, CardContent, Typography, Alert} from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
+import Chip from "@mui/material/Chip";
 
 
 const BookCard = (props) => {
@@ -70,7 +71,7 @@ const BookCard = (props) => {
             <Card variant={"outlined"}>
                 <CardHeader
                     title={
-                        <h1>{props.book.name}</h1>
+                        <h2>{props.book.name}</h2>
                     }
                     subheader={
                         "BY " + props.book.author
@@ -79,11 +80,15 @@ const BookCard = (props) => {
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
                         {"isbn: " + props.book.isbn} <br/>
-                        {"Availability: " + props.book.bookAvailability} <br/>
+                        {/*{"Availability: " + props.book.bookAvailability} <br/>*/}
                     </Typography>
                 </CardContent>
-                <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row"}}>
-                    {props.offered === true && <Button onClick={handleRemove}>Remove</Button>}
+                <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row", marginRight:40, marginBottom:10}}>
+                    {props.book.bookAvailability === "AVAILABLE" && <Chip style={{backgroundColor:'greenyellow'}} label={props.book.bookAvailability} />}
+                    {props.book.bookAvailability === "NOTAVAILABLE" && <Chip style={{backgroundColor:'red'}} label={props.book.bookAvailability} />}
+                </div>
+                <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row", marginRight:40}}>
+                    {props.offered === true && props.book.bookAvailability === "AVAILABLE" && <Button onClick={handleRemove}>Remove</Button>}
                     {props.offered === false && <Button onClick={handleReturn}>Return</Button>}
                     {props.available === true && props.loggedIn === true && <Button onClick={handleBorrow}>Borrow</Button>}
                 </div>

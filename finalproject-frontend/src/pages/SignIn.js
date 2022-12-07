@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import Bar from "../components/AppBar";
 
 function Copyright(props) {
     return (
@@ -64,6 +65,7 @@ export default function SignIn() {
 
     return (
         <ThemeProvider theme={theme}>
+            <Bar/>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
