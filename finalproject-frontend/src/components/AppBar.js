@@ -10,11 +10,14 @@ import Tooltip from '@mui/material/Tooltip';
 import BookIcon from '@mui/icons-material/Book';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
-
-
+import Modal from "@mui/material/Modal";
+import CreateBookModal from "./CreateBookModal";
 
 function Bar() {
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const loggedIn = (() => {
         console.log("user", localStorage.getItem("userId"))
@@ -24,7 +27,6 @@ function Bar() {
             return false
         }
     })();
-
 
     const handleLogOut = (event) => {
         console.log("Log out button pressed")
@@ -44,7 +46,8 @@ function Bar() {
 
     const handleAddBook = (event) => {
         console.log("Add book button pressed")
-        window.location.href = "offerBook";
+        handleOpen()
+        // window.location.href = "offerBook";
     };
 
     const handleYourBooks = (event) => {
@@ -132,6 +135,14 @@ function Bar() {
                     </Box>
                 </Toolbar>
             </Container>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+            <CreateBookModal/>
+            </Modal>
         </AppBar>
     );
 }
