@@ -32,7 +32,7 @@ const ProfileCard = () => {
             {!loading && <Card variant={"outlined"}>
                 <CardHeader
                     title={
-                        <h1>{user.username}</h1>
+                        <h2>{user.username}</h2>
                     }
                     subheader={
                         user.name

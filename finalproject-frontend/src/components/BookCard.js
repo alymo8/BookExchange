@@ -79,12 +79,13 @@ const BookCard = (props) => {
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        {"isbn: " + props.book.isbn} <br/>
+                        {"ISBN: " + props.book.isbn} <br/>
+                        {"Date Published " + props.book.datePublished}
                         {/*{"Availability: " + props.book.bookAvailability} <br/>*/}
                     </Typography>
                 </CardContent>
                 <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row", marginRight:40, marginBottom:10}}>
-                    {props.book.bookAvailability === "AVAILABLE" && <Chip style={{backgroundColor:'greenyellow'}} label={props.book.bookAvailability} />}
+                    {props.book.bookAvailability === "AVAILABLE" && <Chip style={{backgroundColor:'mediumseagreen'}} label={props.book.bookAvailability} />}
                     {props.book.bookAvailability === "NOTAVAILABLE" && <Chip style={{backgroundColor:'red'}} label={props.book.bookAvailability} />}
                 </div>
                 <div style={{display: 'flex', justifyContent:'flex-end', flexDirection: "row", marginRight:40}}>
