@@ -6,4 +6,4 @@ This is a Full stack software engineering project. We have used the following te
 Back end: Java, Spring Boot, and Hibernate
 Front end: React
 Cloud and DB: Heroku
-Here is a [Ypoutube demo of BookXchange](https://youtu.be/YqqtQPAwxAk?si=g32qXBZ4JMWbMcy7)
+Here is a [Youtube demo of BookXchange](https://youtu.be/YqqtQPAwxAk?si=g32qXBZ4JMWbMcy7)
